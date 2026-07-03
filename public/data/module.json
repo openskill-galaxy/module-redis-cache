@@ -1,0 +1,41 @@
+{
+  "id": "mod-redis-cache",
+  "slug": "module-redis-cache",
+  "title": "Redis缓存与高性能数据服务",
+  "subtitle": "面向后端和高并发系统学习者",
+  "description": "面向后端高并发和数据库学习者的Redis数据结构缓存设计过期策略持久化分布式锁消息队列主从哨兵集群缓存穿透击穿雪崩与项目实战训练。",
+  "version": "2.0.0",
+  "license": "MIT",
+  "authors": [
+    "OpenSkill Community"
+  ],
+  "tags": [
+    "Redis",
+    "缓存",
+    "高并发",
+    "分布式锁",
+    "消息队列",
+    "持久化",
+    "缓存雪崩",
+    "性能优化"
+  ],
+  "estimatedHours": 160,
+  "difficulty": "intermediate",
+  "updatedAt": "2026-07-03T00:00:00.000Z",
+  "coverEmoji": "📡",
+  "repoUrl": "https://github.com/openskill-galaxy/module-redis-cache",
+  "portalUrl": "https://openskill-galaxy.github.io/",
+  "status": "stable",
+  "stats": {
+    "courses": 14,
+    "lessons": 182,
+    "knowledgePoints": 735,
+    "questions": 3700,
+    "cases": 260,
+    "exams": 100,
+    "routes": 35,
+    "glossary": 360,
+    "faqs": 210,
+    "tags": 111
+  }
+}
