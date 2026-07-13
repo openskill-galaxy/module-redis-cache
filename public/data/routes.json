@@ -12,7 +12,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线1"
   },
   {
     "id": "rd-route-02",
@@ -27,7 +28,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线2"
   },
   {
     "id": "rd-route-03",
@@ -42,7 +44,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线3"
   },
   {
     "id": "rd-route-04",
@@ -57,7 +60,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线4"
   },
   {
     "id": "rd-route-05",
@@ -72,7 +76,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线5"
   },
   {
     "id": "rd-route-06",
@@ -87,7 +92,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线6"
   },
   {
     "id": "rd-route-07",
@@ -102,7 +108,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线7"
   },
   {
     "id": "rd-route-08",
@@ -117,7 +124,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线8"
   },
   {
     "id": "rd-route-09",
@@ -132,7 +140,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线9"
   },
   {
     "id": "rd-route-10",
@@ -147,7 +156,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线10"
   },
   {
     "id": "rd-route-11",
@@ -162,7 +172,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线11"
   },
   {
     "id": "rd-route-12",
@@ -177,7 +188,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线12"
   },
   {
     "id": "rd-route-13",
@@ -192,7 +204,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线13"
   },
   {
     "id": "rd-route-14",
@@ -207,7 +220,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线14"
   },
   {
     "id": "rd-route-15",
@@ -222,7 +236,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线15"
   },
   {
     "id": "rd-route-16",
@@ -237,7 +252,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线16"
   },
   {
     "id": "rd-route-17",
@@ -252,7 +268,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线17"
   },
   {
     "id": "rd-route-18",
@@ -267,7 +284,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线18"
   },
   {
     "id": "rd-route-19",
@@ -282,7 +300,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线19"
   },
   {
     "id": "rd-route-20",
@@ -297,7 +316,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线20"
   },
   {
     "id": "rd-route-21",
@@ -312,7 +332,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线21"
   },
   {
     "id": "rd-route-22",
@@ -327,7 +348,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线22"
   },
   {
     "id": "rd-route-23",
@@ -342,7 +364,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线23"
   },
   {
     "id": "rd-route-24",
@@ -357,7 +380,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线24"
   },
   {
     "id": "rd-route-25",
@@ -372,7 +396,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线25"
   },
   {
     "id": "rd-route-26",
@@ -387,7 +412,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线26"
   },
   {
     "id": "rd-route-27",
@@ -402,7 +428,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线27"
   },
   {
     "id": "rd-route-28",
@@ -417,7 +444,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线28"
   },
   {
     "id": "rd-route-29",
@@ -432,7 +460,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线29"
   },
   {
     "id": "rd-route-30",
@@ -447,7 +476,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线30"
   },
   {
     "id": "rd-route-31",
@@ -462,7 +492,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线31"
   },
   {
     "id": "rd-route-32",
@@ -477,7 +508,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线32"
   },
   {
     "id": "rd-route-33",
@@ -492,7 +524,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线33"
   },
   {
     "id": "rd-route-34",
@@ -507,7 +540,8 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线34"
   },
   {
     "id": "rd-route-35",
@@ -522,6 +556,7 @@
     "recommendedQuestionIds": [],
     "outcomes": [
       "掌握"
-    ]
+    ],
+    "summary": "Redis路线35"
   }
 ]
