@@ -1,218 +1,428 @@
 [
   {
     "id": "mod-redis-cache-q-1",
-    "slug": "question-course-1-2",
+    "slug": "question-1",
     "type": "single",
-    "stem": "在学习 [Redis缓存与高性能数据服务] 的过程里，关于“Redis缓存与高性能数据服务 环境依赖搭建与运行机制”的核心考点，以下表述最为准确的是？",
+    "stem": "Redis 处理命令的核心模型是单线程（6.0 后 I/O 可多线程），但它依然能支撑极高的 QPS，主要原因不包括下列哪项？",
     "options": [
-      {
-        "key": "A",
-        "text": "在通常场景下，该机制设计能有效规避高并发阻塞，确保操作的高可用性。"
-      },
-      {
-        "key": "B",
-        "text": "该机制主要依赖外部环境变量进行硬编码注入，缺乏高并发条件下的安全锁机制。"
-      },
-      {
-        "key": "C",
-        "text": "在运行态无法进行动态横向伸缩，属于轻量单机调试环境特有的只读过渡方案。"
-      },
-      {
-        "key": "D",
-        "text": "这是一种完全淘汰的历史过渡方案，在新版本框架下会导致无法通过静态编译器校验。"
-      }
+      { "key": "A", "text": "每个命令都由多个工作线程并行执行计算" },
+      { "key": "B", "text": "数据基本都在内存中操作" },
+      { "key": "C", "text": "基于 epoll 等 I/O 多路复用处理大量连接" },
+      { "key": "D", "text": "高效的数据结构实现（如 SDS、跳表、压缩列表）" }
     ],
-    "answer": [
-      "0"
-    ],
-    "explanation": "关于“Redis缓存与高性能数据服务 环境依赖搭建与运行机制”的正确答案为 A。解析：在 Redis缓存与高性能数据服务 的设计最佳实践中，该机制不仅对运行时进行了优化，更在多核处理器并发下实现了底层的并发保护机制，属于生产环境下推荐的高性能应用模式。",
-    "tags": [
-      "Redis缓存与高性能数据服务",
-      "基础考点"
-    ],
-    "difficulty": "medium",
-    "chapter": "course-1",
+    "answer": ["A"],
+    "explanation": "Redis 高性能来自纯内存操作、I/O 多路复用、高效数据结构以及单线程避免锁竞争与上下文切换。命令执行本身始终是单线程串行的，6.0 引入的多线程只用于网络 I/O 读写与协议解析，不会并行执行命令，故 A 不是原因。",
+    "tags": ["Redis", "线程模型", "性能"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-1",
     "knowledge_points": [],
-    "estimated_time": 5
+    "estimated_time": 3
   },
   {
     "id": "mod-redis-cache-q-2",
-    "slug": "question-course-1-3",
+    "slug": "question-2",
     "type": "single",
-    "stem": "在学习 [Redis缓存与高性能数据服务] 的过程里，关于“Redis缓存与高性能数据服务 配置文件覆盖与属性解析”的核心考点，以下表述最为准确的是？",
+    "stem": "要实现「文章点赞用户去重统计」，即记录哪些用户点过赞且同一用户只算一次，最合适的 Redis 数据类型是？",
     "options": [
-      {
-        "key": "A",
-        "text": "在通常场景下，该机制设计能有效规避高并发阻塞，确保操作的高可用性。"
-      },
-      {
-        "key": "B",
-        "text": "该机制主要依赖外部环境变量进行硬编码注入，缺乏高并发条件下的安全锁机制。"
-      },
-      {
-        "key": "C",
-        "text": "在运行态无法进行动态横向伸缩，属于轻量单机调试环境特有的只读过渡方案。"
-      },
-      {
-        "key": "D",
-        "text": "这是一种完全淘汰的历史过渡方案，在新版本框架下会导致无法通过静态编译器校验。"
-      }
+      { "key": "A", "text": "Set（集合）" },
+      { "key": "B", "text": "List（列表）" },
+      { "key": "C", "text": "String（字符串）" },
+      { "key": "D", "text": "Hash 的单个 field 存拼接字符串" }
     ],
-    "answer": [
-      "0"
-    ],
-    "explanation": "关于“Redis缓存与高性能数据服务 配置文件覆盖与属性解析”的正确答案为 A。解析：在 Redis缓存与高性能数据服务 的设计最佳实践中，该机制不仅对运行时进行了优化，更在多核处理器并发下实现了底层的并发保护机制，属于生产环境下推荐的高性能应用模式。",
-    "tags": [
-      "Redis缓存与高性能数据服务",
-      "基础考点"
-    ],
-    "difficulty": "medium",
-    "chapter": "course-1",
+    "answer": ["A"],
+    "explanation": "Set 天然去重，SADD 添加用户 ID、SCARD 统计数量、SISMEMBER 判断是否点过赞，完美匹配需求。List 允许重复元素需要额外判重；String 与拼接字符串方案在增删查上都低效且易出错。",
+    "tags": ["数据类型", "Set"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-2",
     "knowledge_points": [],
-    "estimated_time": 5
+    "estimated_time": 3
   },
   {
     "id": "mod-redis-cache-q-3",
-    "slug": "question-course-2-4",
+    "slug": "question-3",
     "type": "single",
-    "stem": "在学习 [Redis缓存与高性能数据服务] 的过程里，关于“Redis缓存与高性能数据服务 API 接口规范与数据通信”的核心考点，以下表述最为准确的是？",
+    "stem": "关于缓存穿透（大量请求查询数据库中根本不存在的数据），最有针对性的防护方案是？",
     "options": [
-      {
-        "key": "A",
-        "text": "在通常场景下，该机制设计能有效规避高并发阻塞，确保操作的高可用性。"
-      },
-      {
-        "key": "B",
-        "text": "该机制主要依赖外部环境变量进行硬编码注入，缺乏高并发条件下的安全锁机制。"
-      },
-      {
-        "key": "C",
-        "text": "在运行态无法进行动态横向伸缩，属于轻量单机调试环境特有的只读过渡方案。"
-      },
-      {
-        "key": "D",
-        "text": "这是一种完全淘汰的历史过渡方案，在新版本框架下会导致无法通过静态编译器校验。"
-      }
+      { "key": "A", "text": "布隆过滤器拦截不存在的 key，或对空结果缓存短 TTL 的空值" },
+      { "key": "B", "text": "把所有 key 的过期时间设置为永不过期" },
+      { "key": "C", "text": "增加 Redis 从节点的数量" },
+      { "key": "D", "text": "开启 AOF 持久化" }
     ],
-    "answer": [
-      "0"
-    ],
-    "explanation": "关于“Redis缓存与高性能数据服务 API 接口规范与数据通信”的正确答案为 A。解析：在 Redis缓存与高性能数据服务 的设计最佳实践中，该机制不仅对运行时进行了优化，更在多核处理器并发下实现了底层的并发保护机制，属于生产环境下推荐的高性能应用模式。",
-    "tags": [
-      "Redis缓存与高性能数据服务",
-      "基础考点"
-    ],
+    "answer": ["A"],
+    "explanation": "穿透的特征是查询的 key 在缓存和数据库中都不存在，每次都会打到数据库。布隆过滤器可在入口以极小内存判断 key「一定不存在」直接拒绝；缓存空值可让后续相同请求命中缓存。永不过期、加从节点、持久化都无法阻止不存在 key 的查询落库。",
+    "tags": ["缓存穿透", "布隆过滤器"],
     "difficulty": "medium",
-    "chapter": "course-2",
+    "chapter": "mod-redis-cache-c-3",
     "knowledge_points": [],
-    "estimated_time": 5
+    "estimated_time": 3
   },
   {
     "id": "mod-redis-cache-q-4",
-    "slug": "question-course-2-5",
+    "slug": "question-4",
     "type": "single",
-    "stem": "在学习 [Redis缓存与高性能数据服务] 的过程里，关于“Redis缓存与高性能数据服务 核心控制器与数据校验机制”的核心考点，以下表述最为准确的是？",
+    "stem": "大量缓存 key 在同一时刻集中过期，导致请求洪峰直接压向数据库，这种现象叫什么？",
     "options": [
-      {
-        "key": "A",
-        "text": "在通常场景下，该机制设计能有效规避高并发阻塞，确保操作的高可用性。"
-      },
-      {
-        "key": "B",
-        "text": "该机制主要依赖外部环境变量进行硬编码注入，缺乏高并发条件下的安全锁机制。"
-      },
-      {
-        "key": "C",
-        "text": "在运行态无法进行动态横向伸缩，属于轻量单机调试环境特有的只读过渡方案。"
-      },
-      {
-        "key": "D",
-        "text": "这是一种完全淘汰的历史过渡方案，在新版本框架下会导致无法通过静态编译器校验。"
-      }
+      { "key": "A", "text": "缓存雪崩" },
+      { "key": "B", "text": "缓存穿透" },
+      { "key": "C", "text": "缓存击穿" },
+      { "key": "D", "text": "缓存预热" }
     ],
-    "answer": [
-      "0"
-    ],
-    "explanation": "关于“Redis缓存与高性能数据服务 核心控制器与数据校验机制”的正确答案为 A。解析：在 Redis缓存与高性能数据服务 的设计最佳实践中，该机制不仅对运行时进行了优化，更在多核处理器并发下实现了底层的并发保护机制，属于生产环境下推荐的高性能应用模式。",
-    "tags": [
-      "Redis缓存与高性能数据服务",
-      "基础考点"
-    ],
-    "difficulty": "medium",
-    "chapter": "course-2",
+    "answer": ["A"],
+    "explanation": "雪崩指大批 key 同时失效（或 Redis 整体宕机）造成数据库瞬时压力剧增，常用「过期时间加随机抖动、多级缓存、熔断限流、高可用集群」来缓解。穿透针对不存在的 key；击穿是单个热点 key 过期瞬间的并发回源；预热是上线前主动加载缓存的手段。",
+    "tags": ["缓存雪崩"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-1",
     "knowledge_points": [],
-    "estimated_time": 5
+    "estimated_time": 3
   },
   {
     "id": "mod-redis-cache-q-5",
-    "slug": "question-course-3-6",
+    "slug": "question-5",
     "type": "single",
-    "stem": "在学习 [Redis缓存与高性能数据服务] 的过程里，关于“Redis缓存与高性能数据服务 缓存优化与垃圾回收调优”的核心考点，以下表述最为准确的是？",
+    "stem": "关于 RDB 和 AOF 两种持久化方式，下列说法正确的是？",
     "options": [
-      {
-        "key": "A",
-        "text": "在通常场景下，该机制设计能有效规避高并发阻塞，确保操作的高可用性。"
-      },
-      {
-        "key": "B",
-        "text": "该机制主要依赖外部环境变量进行硬编码注入，缺乏高并发条件下的安全锁机制。"
-      },
-      {
-        "key": "C",
-        "text": "在运行态无法进行动态横向伸缩，属于轻量单机调试环境特有的只读过渡方案。"
-      },
-      {
-        "key": "D",
-        "text": "这是一种完全淘汰的历史过渡方案，在新版本框架下会导致无法通过静态编译器校验。"
-      }
+      { "key": "A", "text": "RDB 是某一时刻的内存快照，恢复快但可能丢失最后一次快照后的数据；AOF 记录写命令日志，数据更完整但文件通常更大" },
+      { "key": "B", "text": "AOF 恢复速度总是比 RDB 快" },
+      { "key": "C", "text": "开启 RDB 后就不允许再开启 AOF" },
+      { "key": "D", "text": "RDB 快照默认由主线程同步完成，期间拒绝所有读写" }
     ],
-    "answer": [
-      "0"
-    ],
-    "explanation": "关于“Redis缓存与高性能数据服务 缓存优化与垃圾回收调优”的正确答案为 A。解析：在 Redis缓存与高性能数据服务 的设计最佳实践中，该机制不仅对运行时进行了优化，更在多核处理器并发下实现了底层的并发保护机制，属于生产环境下推荐的高性能应用模式。",
-    "tags": [
-      "Redis缓存与高性能数据服务",
-      "基础考点"
-    ],
+    "answer": ["A"],
+    "explanation": "RDB 通过 fork 子进程生成二进制快照，体积小、加载快，但两次快照之间的写入可能丢失；AOF 以追加写命令的方式记录，配合 everysec 刷盘最多丢约 1 秒数据，但文件大、重放恢复慢。两者可同时开启（还支持混合持久化）；bgsave 由子进程完成，主进程仍可处理请求。",
+    "tags": ["持久化", "RDB", "AOF"],
     "difficulty": "medium",
-    "chapter": "course-3",
+    "chapter": "mod-redis-cache-c-2",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-6",
+    "slug": "question-6",
+    "type": "single",
+    "stem": "使用 SET key value NX EX 30 实现分布式锁时，参数 NX 和 EX 的作用分别是？",
+    "options": [
+      { "key": "A", "text": "NX 保证仅当 key 不存在时才能设置成功（互斥），EX 设置过期时间防止持锁方崩溃导致死锁" },
+      { "key": "B", "text": "NX 表示不持久化该 key，EX 表示排他访问" },
+      { "key": "C", "text": "NX 让 key 只读，EX 让 key 加密存储" },
+      { "key": "D", "text": "NX 与 EX 均为性能优化参数，与锁语义无关" }
+    ],
+    "answer": ["A"],
+    "explanation": "NX（Not eXists）保证同一时刻只有一个客户端能设置成功，实现互斥；EX 附带过期时间，即使持锁进程崩溃锁也会自动释放，避免死锁。两者必须在一条命令中原子完成，分开执行会有崩溃窗口。释放锁时还应校验 value（唯一标识）防止误删他人锁。",
+    "tags": ["分布式锁"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-3",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-7",
+    "slug": "question-7",
+    "type": "single",
+    "stem": "实现游戏积分实时排行榜（按分数排序、支持查询任意玩家排名），最合适的 Redis 数据类型是？",
+    "options": [
+      { "key": "A", "text": "ZSet（有序集合）" },
+      { "key": "B", "text": "Hash（哈希）" },
+      { "key": "C", "text": "List（列表）" },
+      { "key": "D", "text": "Bitmap（位图）" }
+    ],
+    "answer": ["A"],
+    "explanation": "ZSet 为每个成员维护一个 score，底层用跳表加哈希表，ZINCRBY 加分、ZREVRANGE 取前 N 名、ZREVRANK 查排名都是高效操作，是排行榜的标准解法。Hash 无排序能力，List 排序需整体重排，Bitmap 适合布尔状态统计（如签到）。",
+    "tags": ["ZSet", "排行榜"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-1",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-8",
+    "slug": "question-8",
+    "type": "single",
+    "stem": "旁路缓存（Cache-Aside）模式下，更新数据时业界普遍推荐的操作顺序是？",
+    "options": [
+      { "key": "A", "text": "先更新数据库，再删除缓存" },
+      { "key": "B", "text": "先更新缓存，再更新数据库" },
+      { "key": "C", "text": "只更新缓存，等过期后自然同步" },
+      { "key": "D", "text": "先删除缓存，再更新数据库，且不做任何补偿" }
+    ],
+    "answer": ["A"],
+    "explanation": "「先更新库、再删缓存」（配合延迟双删或订阅 Binlog 兜底）不一致窗口最小：删除而非更新缓存可避免并发写导致旧值覆盖新值。先更新缓存可能因数据库回滚产生脏数据；先删缓存再更新库，期间读请求会把旧值重新载入缓存，不做补偿风险更大。",
+    "tags": ["缓存一致性", "Cache-Aside"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-2",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-9",
+    "slug": "question-9",
+    "type": "single",
+    "stem": "某个热点 key（如秒杀商品详情）在过期瞬间涌入上万并发请求，全部回源数据库，这属于什么问题？最常用的解法是？",
+    "options": [
+      { "key": "A", "text": "缓存击穿；用互斥锁让单个请求回源重建，或将热点 key 设为逻辑过期/不过期" },
+      { "key": "B", "text": "缓存穿透；把该 key 从数据库删除" },
+      { "key": "C", "text": "缓存雪崩；重启 Redis 即可" },
+      { "key": "D", "text": "缓存预热；增加数据库连接池大小即可" }
+    ],
+    "answer": ["A"],
+    "explanation": "单个热点 key 失效瞬间的并发回源称为缓存击穿。典型解法：分布式互斥锁保证只有一个请求查库重建缓存，其余请求短暂等待或返回旧值；或对热点 key 采用逻辑过期、后台异步刷新。穿透针对不存在的数据，雪崩是大面积失效，加连接池只是扬汤止沸。",
+    "tags": ["缓存击穿", "热点key"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-3",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-10",
+    "slug": "question-10",
+    "type": "single",
+    "stem": "生产环境 Redis 实例存有大量 key，需要找出所有以 user: 开头的 key，正确的做法是？",
+    "options": [
+      { "key": "A", "text": "使用 SCAN 命令按游标分批迭代匹配" },
+      { "key": "B", "text": "直接执行 KEYS user:* 一次取回" },
+      { "key": "C", "text": "执行 FLUSHALL 后重新写入需要的 key" },
+      { "key": "D", "text": "用 MONITOR 抓取所有命令流量来统计" }
+    ],
+    "answer": ["A"],
+    "explanation": "KEYS 会一次性遍历整个键空间，在大数据量下长时间阻塞单线程主循环，可能造成线上抖动甚至超时雪崩，生产环境应禁用。SCAN 基于游标增量迭代，每次只处理一小批，不长时间阻塞服务。FLUSHALL 清空数据是灾难操作；MONITOR 同样有巨大性能开销。",
+    "tags": ["SCAN", "运维"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-1",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-11",
+    "slug": "question-11",
+    "type": "single",
+    "stem": "Redis 内存达到 maxmemory 上限后，希望「在设置了过期时间的 key 中按 LRU 淘汰」，应配置哪种淘汰策略？",
+    "options": [
+      { "key": "A", "text": "volatile-lru" },
+      { "key": "B", "text": "allkeys-lru" },
+      { "key": "C", "text": "noeviction" },
+      { "key": "D", "text": "volatile-ttl" }
+    ],
+    "answer": ["A"],
+    "explanation": "volatile 前缀表示只在设置了 TTL 的 key 中淘汰，lru 表示按近似最近最少使用挑选，组合即 volatile-lru。allkeys-lru 在全部 key 中淘汰；noeviction 不淘汰而是拒绝写入（默认策略）；volatile-ttl 优先淘汰剩余存活时间最短的 key，并非 LRU。",
+    "tags": ["内存淘汰", "LRU"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-2",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-12",
+    "slug": "question-12",
+    "type": "single",
+    "stem": "关于 Redis Cluster（官方集群模式）的数据分布，下列说法正确的是？",
+    "options": [
+      { "key": "A", "text": "整个键空间被划分为 16384 个哈希槽，每个主节点负责一部分槽" },
+      { "key": "B", "text": "每个节点都保存全量数据，通过读写分离扩展" },
+      { "key": "C", "text": "数据按 key 的首字母分为 26 个分片" },
+      { "key": "D", "text": "客户端必须经过一个中心代理节点才能访问数据" }
+    ],
+    "answer": ["A"],
+    "explanation": "Redis Cluster 用 CRC16(key) mod 16384 将 key 映射到 16384 个 slot，各主节点分管一段 slot 并配有从节点做故障转移；客户端可直连任意节点，收到 MOVED/ASK 重定向后访问正确节点，属于无中心代理架构。B 描述的是主从复制而非分片；C、D 均不符合其设计。",
+    "tags": ["Redis Cluster", "哈希槽"],
+    "difficulty": "hard",
+    "chapter": "mod-redis-cache-c-3",
+    "knowledge_points": [],
+    "estimated_time": 4
+  },
+  {
+    "id": "mod-redis-cache-q-13",
+    "slug": "question-13",
+    "type": "single",
+    "stem": "线上告警显示某 Redis 实例响应变慢，排查发现有一个 Hash 类型的 key 存了 500 万个 field（大 key）。删除它最稳妥的方式是？",
+    "options": [
+      { "key": "A", "text": "使用 UNLINK 异步删除，或用 HSCAN 分批删除 field 后再删 key" },
+      { "key": "B", "text": "直接执行 DEL 同步删除" },
+      { "key": "C", "text": "执行 FLUSHDB 清空当前库" },
+      { "key": "D", "text": "把实例重启，让 key 自动消失" }
+    ],
+    "answer": ["A"],
+    "explanation": "DEL 删除大 key 时需要同步释放数百万个内部节点，会阻塞主线程造成明显停顿。UNLINK 把释放动作交给后台线程异步执行；或用 HSCAN+HDEL 分小批渐进清理。FLUSHDB 波及无辜数据；重启不会删除已持久化的 key，还会引发可用性问题。",
+    "tags": ["大key", "UNLINK", "运维"],
+    "difficulty": "hard",
+    "chapter": "mod-redis-cache-c-1",
+    "knowledge_points": [],
+    "estimated_time": 4
+  },
+  {
+    "id": "mod-redis-cache-q-14",
+    "slug": "question-14",
+    "type": "single",
+    "stem": "关于 Redis 哨兵（Sentinel）模式的核心作用，描述正确的是？",
+    "options": [
+      { "key": "A", "text": "监控主从节点健康状态，主节点故障时自动完成故障转移并通知客户端新主地址" },
+      { "key": "B", "text": "将数据分片存储到多个主节点以突破单机内存上限" },
+      { "key": "C", "text": "对客户端请求做限流和鉴权" },
+      { "key": "D", "text": "替代 AOF/RDB 完成数据持久化" }
+    ],
+    "answer": ["A"],
+    "explanation": "Sentinel 集群持续监控主从实例，多数哨兵判定主观下线升级为客观下线后，选举 Leader 哨兵执行故障转移：挑选合适的从库晋升为主库，并让其他从库改挂新主，同时向客户端发布新主地址。数据分片是 Cluster 的能力；限流鉴权、持久化都不是哨兵的职责。",
+    "tags": ["哨兵", "高可用"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-2",
+    "knowledge_points": [],
+    "estimated_time": 3
+  },
+  {
+    "id": "mod-redis-cache-q-15",
+    "slug": "question-15",
+    "type": "multiple",
+    "stem": "下列哪些措施可以有效缓解缓存雪崩？（多选）",
+    "options": [
+      { "key": "A", "text": "为过期时间加上随机抖动，避免大量 key 同时失效" },
+      { "key": "B", "text": "构建多级缓存（本地缓存 + Redis）并对数据库侧做限流熔断" },
+      { "key": "C", "text": "部署主从 + 哨兵或集群，避免 Redis 单点整体不可用" },
+      { "key": "D", "text": "把所有业务数据都设置为永不过期且从不更新" }
+    ],
+    "answer": ["A", "B", "C"],
+    "explanation": "雪崩的两大诱因是集中过期与实例宕机：随机 TTL 打散过期时间；多级缓存与限流熔断保护数据库；高可用架构防止整体宕机。D 看似避免过期，但数据永不更新会导致严重的业务数据陈旧问题，不是可行方案。",
+    "tags": ["缓存雪崩", "高可用"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-3",
+    "knowledge_points": [],
+    "estimated_time": 4
+  },
+  {
+    "id": "mod-redis-cache-q-16",
+    "slug": "question-16",
+    "type": "multiple",
+    "stem": "关于 Redis 各数据类型的典型应用场景，下列匹配正确的有？（多选）",
+    "options": [
+      { "key": "A", "text": "String + INCR：文章阅读量计数器" },
+      { "key": "B", "text": "Bitmap + SETBIT：用户每日签到记录" },
+      { "key": "C", "text": "HyperLogLog + PFADD：海量 UV 近似去重统计" },
+      { "key": "D", "text": "List + LPUSH：需要按分数实时排序的排行榜" }
+    ],
+    "answer": ["A", "B", "C"],
+    "explanation": "INCR 对 String 原子自增是计数器标准做法；Bitmap 用 1 bit 表示一天是否签到，365 天仅约 46 字节；HyperLogLog 用约 12KB 实现误差约 0.81% 的基数统计，适合海量 UV。排行榜需要按 score 排序与排名查询，应使用 ZSet，List 无此能力，D 错误。",
+    "tags": ["数据类型", "应用场景"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-1",
+    "knowledge_points": [],
+    "estimated_time": 4
+  },
+  {
+    "id": "mod-redis-cache-q-17",
+    "slug": "question-17",
+    "type": "multiple",
+    "stem": "使用 SET NX + EX 实现的简单分布式锁存在哪些已知风险？（多选）",
+    "options": [
+      { "key": "A", "text": "业务执行时间超过锁 TTL，锁提前释放导致两个客户端同时持锁" },
+      { "key": "B", "text": "释放锁时不校验持有者标识，可能误删其他客户端的锁" },
+      { "key": "C", "text": "主从异步复制下，主库宕机时锁信息可能未同步到新主，互斥性被破坏" },
+      { "key": "D", "text": "NX 参数会让 Redis 拒绝所有读请求" }
+    ],
+    "answer": ["A", "B", "C"],
+    "explanation": "简单锁的三大经典风险：TTL 过短导致锁超时失效（可用看门狗续期，如 Redisson）；释放时必须用 Lua 原子校验 value 再删除；主从切换瞬间锁可能丢失（Redlock 或强一致存储可缓解）。NX 只影响该条 SET 命令的语义，不会影响读请求，D 错误。",
+    "tags": ["分布式锁", "可靠性"],
+    "difficulty": "hard",
+    "chapter": "mod-redis-cache-c-2",
     "knowledge_points": [],
     "estimated_time": 5
   },
   {
-    "id": "mod-redis-cache-q-6",
-    "slug": "question-course-3-7",
-    "type": "single",
-    "stem": "在学习 [Redis缓存与高性能数据服务] 的过程里，关于“Redis缓存与高性能数据服务 可观测性日志与分布式链路监控”的核心考点，以下表述最为准确的是？",
+    "id": "mod-redis-cache-q-18",
+    "slug": "question-18",
+    "type": "multiple",
+    "stem": "下列关于 Redis 性能与运维的做法，哪些是值得推荐的？（多选）",
     "options": [
-      {
-        "key": "A",
-        "text": "在通常场景下，该机制设计能有效规避高并发阻塞，确保操作的高可用性。"
-      },
-      {
-        "key": "B",
-        "text": "该机制主要依赖外部环境变量进行硬编码注入，缺乏高并发条件下的安全锁机制。"
-      },
-      {
-        "key": "C",
-        "text": "在运行态无法进行动态横向伸缩，属于轻量单机调试环境特有的只读过渡方案。"
-      },
-      {
-        "key": "D",
-        "text": "这是一种完全淘汰的历史过渡方案，在新版本框架下会导致无法通过静态编译器校验。"
-      }
+      { "key": "A", "text": "用 pipeline 或 Lua 脚本合并多次往返，减少网络 RTT 开销" },
+      { "key": "B", "text": "控制单个 key 的 value 大小与集合元素数量，避免大 key" },
+      { "key": "C", "text": "监控慢查询日志（slowlog）与内存碎片率等核心指标" },
+      { "key": "D", "text": "在主库上定期执行 KEYS * 巡检全部键" }
     ],
-    "answer": [
-      "0"
-    ],
-    "explanation": "关于“Redis缓存与高性能数据服务 可观测性日志与分布式链路监控”的正确答案为 A。解析：在 Redis缓存与高性能数据服务 的设计最佳实践中，该机制不仅对运行时进行了优化，更在多核处理器并发下实现了底层的并发保护机制，属于生产环境下推荐的高性能应用模式。",
-    "tags": [
-      "Redis缓存与高性能数据服务",
-      "基础考点"
-    ],
+    "answer": ["A", "B", "C"],
+    "explanation": "pipeline/Lua 能显著减少网络往返；避免大 key 可防止阻塞与倾斜；slowlog、内存碎片率、命中率、连接数是必备监控项。KEYS * 会全量遍历键空间阻塞主线程，在生产主库上执行是典型反模式，应改用 SCAN。",
+    "tags": ["性能优化", "运维"],
     "difficulty": "medium",
-    "chapter": "course-3",
+    "chapter": "mod-redis-cache-c-3",
     "knowledge_points": [],
-    "estimated_time": 5
+    "estimated_time": 4
+  },
+  {
+    "id": "mod-redis-cache-q-19",
+    "slug": "question-19",
+    "type": "judge",
+    "stem": "判断：Redis 的 EXPIRE 过期删除采用「惰性删除 + 定期抽样删除」组合策略，key 到期后并不保证立即从内存中移除。",
+    "options": [],
+    "answer": ["T"],
+    "explanation": "正确。惰性删除在访问 key 时检查过期并删除；定期删除由后台任务周期性随机抽样清理。因此已过期但未被访问、也未被抽中的 key 会短暂占用内存，maxmemory 淘汰策略是最后一道防线。",
+    "tags": ["过期策略"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-1",
+    "knowledge_points": [],
+    "estimated_time": 2
+  },
+  {
+    "id": "mod-redis-cache-q-20",
+    "slug": "question-20",
+    "type": "judge",
+    "stem": "判断：Redis 事务（MULTI/EXEC）与关系型数据库事务一样，某条命令执行失败时会回滚已执行的命令。",
+    "options": [],
+    "answer": ["F"],
+    "explanation": "错误。Redis 事务只保证命令排队后按顺序、不被其他客户端插队地执行；EXEC 中某条命令运行时出错（如对 String 执行 LPUSH），其余命令依然执行，已执行的不会回滚。Redis 不提供回滚机制，需要原子性复合逻辑时应使用 Lua 脚本。",
+    "tags": ["事务"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-2",
+    "knowledge_points": [],
+    "estimated_time": 2
+  },
+  {
+    "id": "mod-redis-cache-q-21",
+    "slug": "question-21",
+    "type": "judge",
+    "stem": "判断：Redis 主从复制默认是异步的，主库不会等待从库确认写入成功后才响应客户端。",
+    "options": [],
+    "answer": ["T"],
+    "explanation": "正确。主库执行写命令后立即回复客户端，再异步把命令流传播给从库，因此主从之间存在复制延迟，主库宕机瞬间可能丢失尚未同步的写入。WAIT 命令可要求等待指定数量从库确认，但那是可选的半同步手段，并非默认行为。",
+    "tags": ["主从复制"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-3",
+    "knowledge_points": [],
+    "estimated_time": 2
+  },
+  {
+    "id": "mod-redis-cache-q-22",
+    "slug": "question-22",
+    "type": "judge",
+    "stem": "判断：HyperLogLog 统计的基数结果是精确值，可以直接用于财务对账等要求绝对准确的场景。",
+    "options": [],
+    "answer": ["F"],
+    "explanation": "错误。HyperLogLog 是概率型基数估计结构，用约 12KB 内存统计任意规模集合，标准误差约 0.81%，且只能得到总数、无法取出具体成员。它适合 UV 等允许微小误差的统计，财务对账必须使用精确计数方案（如 Set 或数据库聚合）。",
+    "tags": ["HyperLogLog"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-1",
+    "knowledge_points": [],
+    "estimated_time": 2
+  },
+  {
+    "id": "mod-redis-cache-q-23",
+    "slug": "question-23",
+    "type": "short",
+    "stem": "Redis Cluster 将整个键空间划分为多少个哈希槽（slot）？（写出数字）",
+    "options": [],
+    "answer": ["16384|16384个|2^14"],
+    "explanation": "Redis Cluster 使用 CRC16(key) mod 16384 将 key 分配到 16384（2 的 14 次方）个槽。作者选择 16384 而非 65536，是为了让节点间心跳包中的槽位图只占 2KB，并且认为集群规模一般不超过 1000 个节点，16384 个槽已足够分配。",
+    "tags": ["Redis Cluster", "哈希槽"],
+    "difficulty": "medium",
+    "chapter": "mod-redis-cache-c-2",
+    "knowledge_points": [],
+    "estimated_time": 2
+  },
+  {
+    "id": "mod-redis-cache-q-24",
+    "slug": "question-24",
+    "type": "short",
+    "stem": "查询「数据库和缓存中都不存在的数据」导致每次请求都打到数据库的缓存问题，专业术语叫缓存______？（两个字）",
+    "options": [],
+    "answer": ["穿透|缓存穿透"],
+    "explanation": "缓存穿透指请求的 key 在缓存与数据库中均不存在，缓存永远无法命中，恶意构造此类请求可拖垮数据库。常用对策是布隆过滤器前置拦截、缓存空对象（短 TTL）以及接口层参数合法性校验。",
+    "tags": ["缓存穿透"],
+    "difficulty": "easy",
+    "chapter": "mod-redis-cache-c-3",
+    "knowledge_points": [],
+    "estimated_time": 2
   }
 ]

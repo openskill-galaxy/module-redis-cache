@@ -1,31 +1,61 @@
 [
   {
     "id": "mod-redis-cache-exam-1",
-    "slug": "final-exam",
-    "title": "Redis缓存与高性能数据服务 核心期末综合自测",
-    "summary": "全面检验您对 Redis缓存与高性能数据服务 所有阶段知识体系的掌握程度。",
+    "slug": "basic-exam",
+    "title": "Redis 基础入门测验",
+    "summary": "覆盖线程模型、常用数据类型选型与主从/哨兵基础概念，适合入门自测。",
     "difficulty": "easy",
     "questionIds": [
       "mod-redis-cache-q-1",
       "mod-redis-cache-q-2",
-      "mod-redis-cache-q-3",
       "mod-redis-cache-q-4",
-      "mod-redis-cache-q-5",
-      "mod-redis-cache-q-6"
+      "mod-redis-cache-q-7",
+      "mod-redis-cache-q-14",
+      "mod-redis-cache-q-16",
+      "mod-redis-cache-q-21",
+      "mod-redis-cache-q-22"
     ],
-    "timeLimitMinutes": 60,
+    "timeLimitMinutes": 15,
     "passingScore": 60
   },
   {
     "id": "mod-redis-cache-exam-2",
-    "slug": "basic-exam",
-    "title": "Redis缓存与高性能数据服务 基础概念快速评估",
-    "summary": "针对核心基础概念的摸底评估，题目精炼。",
-    "difficulty": "easy",
+    "slug": "advanced-exam",
+    "title": "Redis 进阶强化测验",
+    "summary": "聚焦缓存三大问题、持久化、分布式锁与内存淘汰等进阶主题，检验实战理解。",
+    "difficulty": "medium",
     "questionIds": [
-      "mod-redis-cache-q-1",
-      "mod-redis-cache-q-2",
-      "mod-redis-cache-q-3"
+      "mod-redis-cache-q-3",
+      "mod-redis-cache-q-5",
+      "mod-redis-cache-q-6",
+      "mod-redis-cache-q-8",
+      "mod-redis-cache-q-9",
+      "mod-redis-cache-q-11",
+      "mod-redis-cache-q-15",
+      "mod-redis-cache-q-19",
+      "mod-redis-cache-q-20",
+      "mod-redis-cache-q-24"
+    ],
+    "timeLimitMinutes": 25,
+    "passingScore": 60
+  },
+  {
+    "id": "mod-redis-cache-exam-3",
+    "slug": "comprehensive-exam",
+    "title": "Redis 高性能数据服务综合模拟卷",
+    "summary": "综合集群架构、大 key 治理、分布式锁风险与生产运维等高阶场景题的模拟测试。",
+    "difficulty": "hard",
+    "questionIds": [
+      "mod-redis-cache-q-5",
+      "mod-redis-cache-q-9",
+      "mod-redis-cache-q-10",
+      "mod-redis-cache-q-12",
+      "mod-redis-cache-q-13",
+      "mod-redis-cache-q-15",
+      "mod-redis-cache-q-17",
+      "mod-redis-cache-q-18",
+      "mod-redis-cache-q-20",
+      "mod-redis-cache-q-23"
     ],
     "timeLimitMinutes": 30,
     "passingScore": 60
