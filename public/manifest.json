@@ -1,6 +1,7 @@
 {
-  "short_name": "OpenSkill Module",
-  "name": "OpenSkill Galaxy — 学习自测模块",
+  "short_name": "Redis缓存与高性能数",
+  "name": "OpenSkill Galaxy — Redis缓存与高性能数据服务",
+  "description": "面向后端高并发和数据库学习者的Redis数据结构缓存设计过期策略持久化分布式锁消息队列主从哨兵集群缓存穿透击穿雪崩与项目实战训练。",
   "icons": [
     {
       "src": "favicon.svg",
@@ -8,9 +9,10 @@
       "sizes": "any"
     }
   ],
-  "start_url": ".",
-  "background_color": "#fbfbfd",
-  "theme_color": "#4f46e5",
+  "start_url": "/module-redis-cache/",
+  "scope": "/module-redis-cache/",
+  "background_color": "#f4f5fa",
+  "theme_color": "#3039c9",
   "display": "standalone",
   "orientation": "portrait"
 }

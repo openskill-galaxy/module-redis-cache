@@ -1,71 +1,78 @@
 [
   {
     "id": "mod-redis-cache-c-1",
-    "title": "Redis缓存与高性能数据服务 架构原理与初始化",
+    "title": "核心数据结构与内存编码优化",
     "slug": "course-1",
-    "summary": "深度探索 Redis缓存与高性能数据服务 的设计理念、运行架构以及初始化配置引导。",
+    "summary": "掌握 String/Hash/ZSet/Stream/Bitmap/HyperLogLog 业务选型，理解 listpack、跳表与 BigKey 内存治理。",
     "order": 1,
     "difficulty": "easy",
-    "estimatedHours": 54,
+    "estimatedHours": 8,
     "lessons": [
       "mod-redis-cache-l-1",
       "mod-redis-cache-l-2"
     ],
     "tags": [
       "Redis",
-      "缓存",
-      "高并发",
-      "分布式锁",
-      "消息队列",
-      "持久化",
-      "缓存雪崩",
-      "性能优化"
+      "数据结构",
+      "ZSet",
+      "BigKey"
     ]
   },
   {
     "id": "mod-redis-cache-c-2",
-    "title": "Redis缓存与高性能数据服务 核心机制与开发实战",
+    "title": "高并发缓存架构与一致性治理",
     "slug": "course-2",
-    "summary": "掌握 Redis缓存与高性能数据服务 的核心组件、API 接口调用以及本地开发调试。",
+    "summary": "彻底攻克缓存穿透、击穿、雪崩三大高并发难题，理清 Cache-Aside 双写一致性与延迟双删/订阅失效方案。",
     "order": 2,
-    "difficulty": "easy",
-    "estimatedHours": 54,
+    "difficulty": "medium",
+    "estimatedHours": 12,
     "lessons": [
       "mod-redis-cache-l-3",
       "mod-redis-cache-l-4"
     ],
     "tags": [
-      "Redis",
-      "缓存",
-      "高并发",
-      "分布式锁",
-      "消息队列",
-      "持久化",
+      "缓存穿透",
+      "缓存击穿",
       "缓存雪崩",
-      "性能优化"
+      "双写一致性"
     ]
   },
   {
     "id": "mod-redis-cache-c-3",
-    "title": "Redis缓存与高性能数据服务 高级优化与生产部署",
+    "title": "分布式锁、Lua 原子脚本与限流器",
     "slug": "course-3",
-    "summary": "学习如何进行系统性能监控调优、高可用集群部署与数据存储。",
+    "summary": "手写安全可重入/防误删的分布式锁与滑动窗口 Lua 限流器，掌握 Pipeline 批处理吞吐倍增技巧。",
     "order": 3,
-    "difficulty": "easy",
-    "estimatedHours": 54,
+    "difficulty": "medium",
+    "estimatedHours": 10,
     "lessons": [
       "mod-redis-cache-l-5",
       "mod-redis-cache-l-6"
     ],
     "tags": [
-      "Redis",
-      "缓存",
-      "高并发",
       "分布式锁",
-      "消息队列",
-      "持久化",
-      "缓存雪崩",
-      "性能优化"
+      "Lua脚本",
+      "滑动窗口限流",
+      "Pipeline"
+    ]
+  },
+  {
+    "id": "mod-redis-cache-c-4",
+    "title": "持久化、高可用集群与线上性能排障",
+    "slug": "course-4",
+    "summary": "掌握 RDB/AOF 混合持久化、主从复制与 Cluster 16384 槽分片，以及慢查询、热 Key 与内存淘汰策略调优。",
+    "order": 4,
+    "difficulty": "hard",
+    "estimatedHours": 10,
+    "lessons": [
+      "mod-redis-cache-l-7",
+      "mod-redis-cache-l-8"
+    ],
+    "tags": [
+      "RDB/AOF",
+      "Redis Cluster",
+      "热Key",
+      "淘汰策略"
     ]
   }
 ]

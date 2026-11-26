@@ -3,66 +3,118 @@
     "id": "mod-redis-cache-l-1",
     "courseId": "mod-redis-cache-c-1",
     "order": 1,
-    "title": "Redis缓存与高性能数据服务 环境依赖搭建与运行机制",
+    "title": "核心数据结构选型与高频业务落地",
     "slug": "lesson-1-1",
-    "summary": "了解平台运行依赖、环境参数配置以及本地运行引导流程。",
-    "contentMarkdown": "# Redis缓存与高性能数据服务 环境依赖搭建与运行机制\n          \n## 1. 概述与背景\n在进行 `Redis缓存与高性能数据服务` 的开发实践中，`Redis缓存与高性能数据服务 环境依赖搭建与运行机制` 扮演着非常关键的底层支柱角色。本章节将重点解构其核心运行逻辑。\n\n> [!NOTE]\n> 实践本章前，请确保您的本地运行时版本满足模块要求的最新 LTS 标准。\n\n## 2. 核心原理与拓扑图\n其运作逻辑可以用以下三个层级来描述：\n1. **输入解析层**：捕获客户端请求参数，进行类型预校验。\n2. **处理调度层**：基于核心哈希分配算法定位工作节点，防范并发冲突。\n3. **输出回调层**：完成结果状态原子提交，清空缓存生命周期。\n\n## 3. 代码演练与实战演示\n以下是用于处理该模块逻辑的核心配置或执行程序：\n\n```javascript\n// Redis缓存与高性能数据服务 生产实践示例\nconsole.log(\"Initializing Redis缓存与高性能数据服务 engine...\");\nconst stats = runDiagnosis();\nconsole.log(`Diagnosis completed: ${JSON.stringify(stats)}\\n`);\n```\n\n## 4. 最佳实践避坑指南\n- 务必避免在高并发主循环中进行同步 IO 操作，容易导致 CPU 级死锁。\n- 始终为临时运行缓存设置合理的最大生命周期过期限制（TTL），防止内存泄露。\n",
-    "knowledgePoints": [],
-    "estimatedMinutes": 20
+    "summary": "一张表理清 7 大 Redis 数据结构的底层编码与典型业务场景，避免把所有对象都序列化成 String 硬塞。",
+    "contentMarkdown": "# 核心数据结构选型与高频业务落地\n\n## 1. 数据结构业务选型速查\n\n| 结构 | 常见底层编码 | 典型生产场景 | 关键命令 |\n| :--- | :--- | :--- | :--- |\n| `String` | `int` / `embstr` / `raw` | 计数器、验证码、分布式锁、短 JSON | `SET ... NX EX`, `INCR` |\n| `Hash` | `listpack` / `hashtable` | 局部更新的对象（购物车、用户画像） | `HSET`, `HINCRBY`, `HGETALL` |\n| `ZSet` | `listpack` / `skiplist` | 实时排行榜、延迟任务队列、滑动窗口 | `ZADD`, `ZREVRANGE`, `ZRANGEBYSCORE` |\n| `Bitmap` | String 位数组 | 每日签到、亿级活跃用户标记 | `SETBIT`, `BITCOUNT` |\n| `HyperLogLog` | 固定 12KB 概率结构 | 页面 UV 统计（误差约 0.81%） | `PFADD`, `PFCOUNT` |\n| `Stream` | `radix tree` + `listpack` | 轻量级持久化消息队列与消费者组 | `XADD`, `XREADGROUP`, `XACK` |\n\n## 2. 实时排行榜实战\n```redis\n# 增加玩家积分并查询前 3 名\nZINCRBY game:rank:202611 150 user:1001\nZINCRBY game:rank:202611 320 user:1002\nZREVRANGE game:rank:202611 0 2 WITHSCORES\n```\n\n> [!TIP]\n> 统计千万级日活 UV 时，用 `Set` 存全部用户 ID 往往消耗数百 MB 内存，换成 `HyperLogLog` 只需固定 **12 KB**！",
+    "knowledgePoints": [
+      "rd-kp-0001",
+      "rd-kp-0006"
+    ],
+    "estimatedMinutes": 35
   },
   {
     "id": "mod-redis-cache-l-2",
     "courseId": "mod-redis-cache-c-1",
     "order": 2,
-    "title": "Redis缓存与高性能数据服务 配置文件覆盖与属性解析",
+    "title": "BigKey 识别、渐进式清理与内存优化",
     "slug": "lesson-1-2",
-    "summary": "学习多环境配置管理，利用环境变量覆盖规则进行定制开发。",
-    "contentMarkdown": "# Redis缓存与高性能数据服务 配置文件覆盖与属性解析\n          \n## 1. 概述与背景\n在进行 `Redis缓存与高性能数据服务` 的开发实践中，`Redis缓存与高性能数据服务 配置文件覆盖与属性解析` 扮演着非常关键的底层支柱角色。本章节将重点解构其核心运行逻辑。\n\n> [!NOTE]\n> 实践本章前，请确保您的本地运行时版本满足模块要求的最新 LTS 标准。\n\n## 2. 核心原理与拓扑图\n其运作逻辑可以用以下三个层级来描述：\n1. **输入解析层**：捕获客户端请求参数，进行类型预校验。\n2. **处理调度层**：基于核心哈希分配算法定位工作节点，防范并发冲突。\n3. **输出回调层**：完成结果状态原子提交，清空缓存生命周期。\n\n## 3. 代码演练与实战演示\n以下是用于处理该模块逻辑的核心配置或执行程序：\n\n```javascript\n// Redis缓存与高性能数据服务 生产实践示例\nconsole.log(\"Initializing Redis缓存与高性能数据服务 engine...\");\nconst stats = runDiagnosis();\nconsole.log(`Diagnosis completed: ${JSON.stringify(stats)}\\n`);\n```\n\n## 4. 最佳实践避坑指南\n- 务必避免在高并发主循环中进行同步 IO 操作，容易导致 CPU 级死锁。\n- 始终为临时运行缓存设置合理的最大生命周期过期限制（TTL），防止内存泄露。\n",
-    "knowledgePoints": [],
-    "estimatedMinutes": 20
+    "summary": "理解 Redis 单线程执行模型下 BigKey 带来的阻塞抖动，掌握 `UNLINK` 异步释放与 `SCAN` 渐进扫描。",
+    "contentMarkdown": "# BigKey 识别、渐进式清理与内存优化\n\n## 1. 为什么一个 BigKey 能拖垮整台 Redis？\nRedis 主线程处理命令是单线程的。如果某个 String 达到 10MB，或者某个 Hash/Set 包含 50 万个元素，执行一次 `DEL`、`HGETALL` 或 `KEYS *` 就会阻塞主线程几十到数百毫秒，引发全站接口雪崩超时。\n\n## 2. 线上排查与安全清理姿势\n```bash\n# 1. 在从节点低峰期扫描大 Key（加 -i 0.1 限速防止打满 CPU）\nredis-cli --bigkeys -i 0.1\n\n# 2. 生产严禁 KEYS *，改用渐进式 SCAN\nredis-cli --scan --pattern \"session:*\" --count 200\n```\n- **异步删除**：用 `UNLINK key` 替代 `DEL key`，由后台线程异步回收大对象内存。\n- **大集合拆分**：把 50 万字段的大 Hash 按 `hash(field) % 64` 拆成 64 个小桶，既消除阻塞又能更好利用紧凑编码 `listpack`。\n\n> [!WARNING]\n> 在生产配置中建议直接通过 `rename-command` 禁用 `KEYS`、`FLUSHALL`、`FLUSHDB` 等高危命令。",
+    "knowledgePoints": [
+      "rd-kp-0001"
+    ],
+    "estimatedMinutes": 35
   },
   {
     "id": "mod-redis-cache-l-3",
     "courseId": "mod-redis-cache-c-2",
     "order": 1,
-    "title": "Redis缓存与高性能数据服务 API 接口规范与数据通信",
+    "title": "缓存穿透、击穿与雪崩的系统防线",
     "slug": "lesson-2-1",
-    "summary": "掌握高性能交互接口设计，实现模块间高效、轻量的数据传输。",
-    "contentMarkdown": "# Redis缓存与高性能数据服务 API 接口规范与数据通信\n          \n## 1. 概述与背景\n在进行 `Redis缓存与高性能数据服务` 的开发实践中，`Redis缓存与高性能数据服务 API 接口规范与数据通信` 扮演着非常关键的底层支柱角色。本章节将重点解构其核心运行逻辑。\n\n> [!NOTE]\n> 实践本章前，请确保您的本地运行时版本满足模块要求的最新 LTS 标准。\n\n## 2. 核心原理与拓扑图\n其运作逻辑可以用以下三个层级来描述：\n1. **输入解析层**：捕获客户端请求参数，进行类型预校验。\n2. **处理调度层**：基于核心哈希分配算法定位工作节点，防范并发冲突。\n3. **输出回调层**：完成结果状态原子提交，清空缓存生命周期。\n\n## 3. 代码演练与实战演示\n以下是用于处理该模块逻辑的核心配置或执行程序：\n\n```javascript\n// Redis缓存与高性能数据服务 生产实践示例\nconsole.log(\"Initializing Redis缓存与高性能数据服务 engine...\");\nconst stats = runDiagnosis();\nconsole.log(`Diagnosis completed: ${JSON.stringify(stats)}\\n`);\n```\n\n## 4. 最佳实践避坑指南\n- 务必避免在高并发主循环中进行同步 IO 操作，容易导致 CPU 级死锁。\n- 始终为临时运行缓存设置合理的最大生命周期过期限制（TTL），防止内存泄露。\n",
-    "knowledgePoints": [],
-    "estimatedMinutes": 20
+    "summary": "精准区分缓存三大经典故障成因，掌握布隆过滤器、Singleflight 互斥合并与随机 TTL 抖动等生产级解法。",
+    "contentMarkdown": "# 缓存穿透、击穿与雪崩的系统防线\n\n## 1. 三大故障对比与标准解法\n\n| 故障类型 | 核心诱因 | 生产级防护组合 |\n| :--- | :--- | :--- |\n| **缓存穿透** | 恶意请求大量**不存在的 ID**，缓存与 DB 双双未命中 | 入口参数校验 + 缓存空值（短 TTL 30–60s） + **布隆过滤器（Bloom Filter）** |\n| **缓存击穿** | 单个**超高并发热点 Key** 过期瞬间，万级请求同时打穿 DB | **Singleflight / 分布式互斥锁**（只放 1 个请求回源）或逻辑过期异步刷新 |\n| **缓存雪崩** | 大批 Key **同一秒集中过期**，或 Redis 集群整体宕机 | TTL 加随机抖动（如 `3600 + rand(0, 600)`） + 多级本地缓存 + 熔断降级 |\n\n## 2. 伪代码：Singleflight + 空值保护回源\n```python\ndef get_product(pid: int, cache, db) -> dict | None:\n    key = f\"prod:{pid}\"\n    val = cache.get(key)\n    if val is not None:\n        return None if val == \"__NULL__\" else json.loads(val)\n\n    with singleflight_lock(key):  # 合并同 Key 并发回源\n        val = cache.get(key)      # 双重检查\n        if val is not None:\n            return None if val == \"__NULL__\" else json.loads(val)\n        row = db.find_product(pid)\n        if row is None:\n            cache.setex(key, 60, \"__NULL__\")\n            return None\n        ttl = 3600 + random.randint(0, 600)\n        cache.setex(key, ttl, json.dumps(row))\n        return row\n```",
+    "knowledgePoints": [
+      "rd-kp-0013",
+      "rd-kp-0014",
+      "rd-kp-0015"
+    ],
+    "estimatedMinutes": 40
   },
   {
     "id": "mod-redis-cache-l-4",
     "courseId": "mod-redis-cache-c-2",
     "order": 2,
-    "title": "Redis缓存与高性能数据服务 核心控制器与数据校验机制",
+    "title": "数据库与缓存双写一致性实战",
     "slug": "lesson-2-2",
-    "summary": "掌握核心控制器的异常处理、拦截器配置与入参格式合法性检查。",
-    "contentMarkdown": "# Redis缓存与高性能数据服务 核心控制器与数据校验机制\n          \n## 1. 概述与背景\n在进行 `Redis缓存与高性能数据服务` 的开发实践中，`Redis缓存与高性能数据服务 核心控制器与数据校验机制` 扮演着非常关键的底层支柱角色。本章节将重点解构其核心运行逻辑。\n\n> [!NOTE]\n> 实践本章前，请确保您的本地运行时版本满足模块要求的最新 LTS 标准。\n\n## 2. 核心原理与拓扑图\n其运作逻辑可以用以下三个层级来描述：\n1. **输入解析层**：捕获客户端请求参数，进行类型预校验。\n2. **处理调度层**：基于核心哈希分配算法定位工作节点，防范并发冲突。\n3. **输出回调层**：完成结果状态原子提交，清空缓存生命周期。\n\n## 3. 代码演练与实战演示\n以下是用于处理该模块逻辑的核心配置或执行程序：\n\n```javascript\n// Redis缓存与高性能数据服务 生产实践示例\nconsole.log(\"Initializing Redis缓存与高性能数据服务 engine...\");\nconst stats = runDiagnosis();\nconsole.log(`Diagnosis completed: ${JSON.stringify(stats)}\\n`);\n```\n\n## 4. 最佳实践避坑指南\n- 务必避免在高并发主循环中进行同步 IO 操作，容易导致 CPU 级死锁。\n- 始终为临时运行缓存设置合理的最大生命周期过期限制（TTL），防止内存泄露。\n",
-    "knowledgePoints": [],
-    "estimatedMinutes": 20
+    "summary": "深入剖析 Cache-Aside 模式为何选择“先更新数据库，再删除缓存”，以及基于 Binlog 异步删缓存的最终一致架构。",
+    "contentMarkdown": "# 数据库与缓存双写一致性实战\n\n## 1. 为什么是“先更新 DB，再删缓存”？\n- **为何删除而不是更新缓存？** 并发写时“先更新 DB 再更新缓存”可能因为网络乱序导致旧值覆盖新值，且冷数据频繁更新缓存属于浪费（懒加载思想）。\n- **为何先更新 DB 再删缓存？** 若先删缓存再更新 DB，在 DB 更新完成前的空窗期，任意读请求都会把旧数据重新写回缓存，脏数据会一直留到 TTL 过期。\n\n## 2. 如果“删缓存”这一步失败了怎么办？\n单靠业务代码里的 `cache.delete(key)`，进程崩溃或网络抖动会导致缓存残留旧值。高可靠方案采用 **CDC / Binlog 异步订阅（如 Canal / Debezium）**：\n1. 业务只专注提交 MySQL 事务；\n2. 订阅组件监听 MySQL Binlog 变更事件并投递到消息队列；\n3. 消费者幂等删除对应 Redis Key，失败自动指数退避重试，同时把缓存与业务彻底解耦。\n\n> [!IMPORTANT]\n> 任何缓存方案都要给所有 Key 设置合理的兜底 TTL，它是防止极端情况下脏数据永久滞留的最后一道保险。",
+    "knowledgePoints": [
+      "rd-kp-0001",
+      "rd-kp-0007"
+    ],
+    "estimatedMinutes": 35
   },
   {
     "id": "mod-redis-cache-l-5",
     "courseId": "mod-redis-cache-c-3",
     "order": 1,
-    "title": "Redis缓存与高性能数据服务 缓存优化与垃圾回收调优",
+    "title": "安全分布式锁与 Lua 脚本原子性保障",
     "slug": "lesson-3-1",
-    "summary": "定位运行时的内存与缓存瓶颈，学习垃圾回收算法调优实践。",
-    "contentMarkdown": "# Redis缓存与高性能数据服务 缓存优化与垃圾回收调优\n          \n## 1. 概述与背景\n在进行 `Redis缓存与高性能数据服务` 的开发实践中，`Redis缓存与高性能数据服务 缓存优化与垃圾回收调优` 扮演着非常关键的底层支柱角色。本章节将重点解构其核心运行逻辑。\n\n> [!NOTE]\n> 实践本章前，请确保您的本地运行时版本满足模块要求的最新 LTS 标准。\n\n## 2. 核心原理与拓扑图\n其运作逻辑可以用以下三个层级来描述：\n1. **输入解析层**：捕获客户端请求参数，进行类型预校验。\n2. **处理调度层**：基于核心哈希分配算法定位工作节点，防范并发冲突。\n3. **输出回调层**：完成结果状态原子提交，清空缓存生命周期。\n\n## 3. 代码演练与实战演示\n以下是用于处理该模块逻辑的核心配置或执行程序：\n\n```javascript\n// Redis缓存与高性能数据服务 生产实践示例\nconsole.log(\"Initializing Redis缓存与高性能数据服务 engine...\");\nconst stats = runDiagnosis();\nconsole.log(`Diagnosis completed: ${JSON.stringify(stats)}\\n`);\n```\n\n## 4. 最佳实践避坑指南\n- 务必避免在高并发主循环中进行同步 IO 操作，容易导致 CPU 级死锁。\n- 始终为临时运行缓存设置合理的最大生命周期过期限制（TTL），防止内存泄露。\n",
-    "knowledgePoints": [],
-    "estimatedMinutes": 20
+    "summary": "掌握 `SET NX PX` 加锁与 Lua 校验 Token 原子解锁，彻底避免锁过期误删他人锁的经典事故。",
+    "contentMarkdown": "# 安全分布式锁与 Lua 脚本原子性保障\n\n## 1. 生产级 Redis 分布式锁三要素\n1. **互斥与防死锁**：必须用单条原子命令 `SET lock:order:123 <unique_token> NX PX 10000` 同时设置占位与过期时间。\n2. **防误删**：每个持有者生成唯一 `token`（如 UUID），解锁时只能删除 `token` 与自己一致的锁，避免任务超时后把别人的新锁删掉。\n3. **原子解锁**：`GET` 校验 + `DEL` 必须放进同一段 **Lua 脚本**在 Redis 服务端原子执行：\n\n```lua\n-- KEYS[1]: 锁的 Key, ARGV[1]: 当前持有者的唯一 token\nif redis.call(\"GET\", KEYS[1]) == ARGV[1] then\n    return redis.call(\"DEL\", KEYS[1])\nelse\n    return 0\nend\n```\n\n> [!WARNING]\n> 如果业务耗时可能超过锁的 TTL，需要引入 **Watchdog（看门狗）** 后台定时续期；同时注意主从异步复制场景下，主节点宕机瞬间可能发生锁丢失，强金融一致性场景应结合数据库乐观锁/唯一索引做幂等兜底。",
+    "knowledgePoints": [
+      "rd-kp-0012"
+    ],
+    "estimatedMinutes": 40
   },
   {
     "id": "mod-redis-cache-l-6",
     "courseId": "mod-redis-cache-c-3",
     "order": 2,
-    "title": "Redis缓存与高性能数据服务 可观测性日志与分布式链路监控",
+    "title": "滑动窗口限流器与 Pipeline 吞吐优化",
     "slug": "lesson-3-2",
-    "summary": "配置全局日志收集管道，分析高负载服务下的运行指标波动。",
-    "contentMarkdown": "# Redis缓存与高性能数据服务 可观测性日志与分布式链路监控\n          \n## 1. 概述与背景\n在进行 `Redis缓存与高性能数据服务` 的开发实践中，`Redis缓存与高性能数据服务 可观测性日志与分布式链路监控` 扮演着非常关键的底层支柱角色。本章节将重点解构其核心运行逻辑。\n\n> [!NOTE]\n> 实践本章前，请确保您的本地运行时版本满足模块要求的最新 LTS 标准。\n\n## 2. 核心原理与拓扑图\n其运作逻辑可以用以下三个层级来描述：\n1. **输入解析层**：捕获客户端请求参数，进行类型预校验。\n2. **处理调度层**：基于核心哈希分配算法定位工作节点，防范并发冲突。\n3. **输出回调层**：完成结果状态原子提交，清空缓存生命周期。\n\n## 3. 代码演练与实战演示\n以下是用于处理该模块逻辑的核心配置或执行程序：\n\n```javascript\n// Redis缓存与高性能数据服务 生产实践示例\nconsole.log(\"Initializing Redis缓存与高性能数据服务 engine...\");\nconst stats = runDiagnosis();\nconsole.log(`Diagnosis completed: ${JSON.stringify(stats)}\\n`);\n```\n\n## 4. 最佳实践避坑指南\n- 务必避免在高并发主循环中进行同步 IO 操作，容易导致 CPU 级死锁。\n- 始终为临时运行缓存设置合理的最大生命周期过期限制（TTL），防止内存泄露。\n",
-    "knowledgePoints": [],
-    "estimatedMinutes": 20
+    "summary": "用 ZSet + Lua 实现精确防突刺的分布式滑动窗口限流，并用 Pipeline 将批量命令 RTT 耗时降低 10 倍以上。",
+    "contentMarkdown": "# 滑动窗口限流器与 Pipeline 吞吐优化\n\n## 1. ZSet + Lua 滑动窗口限流\n相比固定窗口在整点边界可能放过 2 倍突发流量，滑动窗口精确统计最近 `window_ms` 内的请求数：\n\n```lua\n-- KEYS[1]: rate:user:42 | ARGV[1]: now_ms | ARGV[2]: window_ms | ARGV[3]: limit | ARGV[4]: req_id\nlocal key = KEYS[1]\nlocal now = tonumber(ARGV[1])\nlocal window = tonumber(ARGV[2])\nlocal limit = tonumber(ARGV[3])\n\nredis.call(\"ZREMRANGEBYSCORE\", key, 0, now - window)\nlocal count = redis.call(\"ZCARD\", key)\nif count >= limit then\n    return 0\nend\nredis.call(\"ZADD\", key, now, ARGV[4])\nredis.call(\"PEXPIRE\", key, window)\nreturn 1\n```\n\n## 2. Pipeline 批量打包降 RTT\n当业务需要一次读取或写入 500 个 Key 时，逐条发送会产生 500 次网络往返（RTT）；使用 **Pipeline** 打包成一次网络发送（建议每批 200–500 条，避免单包过大阻塞），吞吐量通常直接提升 **10–30 倍**。",
+    "knowledgePoints": [
+      "rd-kp-0006",
+      "rd-kp-0001"
+    ],
+    "estimatedMinutes": 40
+  },
+  {
+    "id": "mod-redis-cache-l-7",
+    "courseId": "mod-redis-cache-c-4",
+    "order": 1,
+    "title": "RDB/AOF 混合持久化与 Redis Cluster 分片原理",
+    "slug": "lesson-4-1",
+    "summary": "权衡 RDB 快照与 AOF 日志的恢复速度与数据安全性，理解 16384 个哈希槽与 Hash Tag 同槽路由。",
+    "contentMarkdown": "# RDB/AOF 混合持久化与 Redis Cluster 分片原理\n\n## 1. 持久化选型对比\n\n| 模式 | 优点 | 缺点 | 生产建议 |\n| :--- | :--- | :--- | :--- |\n| `RDB` | 文件紧凑、恢复极快 | 可能丢失最近几分钟数据；`fork` 瞬间有写时复制开销 | 适合纯缓存与定时冷备 |\n| `AOF (everysec)` | 最多丢 1 秒数据 | 文件体积大、重放恢复慢 | 配合重写机制使用 |\n| **混合持久化**（`aof-use-rdb-preamble yes`） | 兼顾 RDB 快恢复与 AOF 低丢失 | 需开启 AOF | **生产默认推荐** |\n\n## 2. Redis Cluster 16384 哈希槽与 Hash Tag\nCluster 通过 `CRC16(key) mod 16384` 将 Key 路由到不同主节点。如果在集群下执行 `MGET` 或 Lua 多 Key 操作，所有 Key **必须落在同一个 Slot**，可通过 `{...}` Hash Tag 强制同槽，例如 `order:{user42}:list` 与 `order:{user42}:count`。",
+    "knowledgePoints": [
+      "rd-kp-0008",
+      "rd-kp-0011"
+    ],
+    "estimatedMinutes": 40,
+    "practiceQuestionIds": [
+      "mod-redis-cache-q-25"
+    ]
+  },
+  {
+    "id": "mod-redis-cache-l-8",
+    "courseId": "mod-redis-cache-c-4",
+    "order": 2,
+    "title": "内存淘汰策略、热 Key 治理与慢查询排查",
+    "slug": "lesson-4-2",
+    "summary": "掌握 8 种 `maxmemory-policy` 选型、`--hotkeys` 热点定位、本地二级缓存抗热 Key 以及 `SLOWLOG` 排障。",
+    "contentMarkdown": "# 内存淘汰策略、热 Key 治理与慢查询排查\n\n## 1. `maxmemory-policy` 选型原则\n- **纯缓存场景**：优先 `allkeys-lru` 或 `allkeys-lfu`（Redis 4.0+ 推荐 **`allkeys-lfu`**，按访问频率淘汰，比 LRU 更能防偶发扫描污染热点）。\n- **缓存与持久数据混用**：使用 `volatile-lfu` / `volatile-lru`（仅淘汰带 TTL 的 Key），严防误删无过期时间的业务数据。\n\n## 2. 热点 Key（HotKey）打爆单分片的 3 种解法\n1. **应用层本地缓存（Caffeine / LRU）**：对秒级百万 QPS 的明星热 Key 缓存 2–5 秒，直接在应用内存拦截 99% 流量。\n2. **热 Key 拆副本**：写入 `hot:item:1_0` ~ `hot:item:1_9` 10 份副本，读时随机挑一个后缀，把流量均摊到不同 Cluster 分片。\n3. **线上排障三板斧**：\n```bash\nredis-cli SLOWLOG GET 20          # 查看耗时超过 slowlog-log-slower-than 的慢命令\nredis-cli --hotkeys               # LFU 模式下统计热点 Key\nredis-cli INFO memory             # 检查 mem_fragmentation_ratio 内存碎片率\n```",
+    "knowledgePoints": [
+      "rd-kp-0007",
+      "rd-kp-0014",
+      "rd-kp-0001"
+    ],
+    "estimatedMinutes": 35,
+    "practiceQuestionIds": [
+      "mod-redis-cache-q-26"
+    ]
   }
 ]

@@ -2,7 +2,7 @@
   "name": "openskill-module-redis-cache",
   "version": "1.0.0",
   "private": true,
-  "description": "OpenSkill Galaxy reusable static learning module template.",
+  "description": "面向后端和高并发系统学习者",
   "type": "module",
   "scripts": {
     "dev": "vite",
